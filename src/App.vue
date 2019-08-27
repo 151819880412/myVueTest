@@ -1,17 +1,17 @@
 <template>
   <div>
    <router-view></router-view>
-<!--   <Footer/>-->
+  <Footer/>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-// import Footer from './components/Footer/Footer.vue'
+import Footer from './components/Footer/Footer.vue'
   export default {
 
-    // components:{
-    //   Footer
-    // }
+    components:{
+      Footer
+    }
   }
 </script>
 

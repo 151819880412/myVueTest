@@ -1,33 +1,33 @@
 <template>
-  <div class="footerContainer">
+  <div class="footerContainer"  ref="qqq" >
     <Footer class="footer">
         <i href="javascript:" class="footerLis" @click="home">
-          <img v-if="ishome" src="../images/home1.png" class="footerList"></img>
-          <img v-else-if="!ishome" src="../images/home2.png" class="footerList"></img>
+          <img v-if="this.router=='home'" src="../images/home1.png" class="footerList"></img>
+          <img v-else src="../images/home2.png" class="footerList"></img>
           <span class="home">首页</span>
         </i>
 
         <i href="javascript:" class="footerLis" @click="classify">
-          <img v-if="isClassify" src="../images/fenlei1.png" class="footerList"></img>
-          <img v-else-if="!isClassify" src="../images/fenlei2.png" class="footerList"></img>
+          <img v-if="this.router=='classify'" src="../images/fenlei1.png" class="footerList"></img>
+          <img v-else src="../images/fenlei2.png" class="footerList"></img>
           <span class="home">分类</span>
         </i>
 
         <i href="javascript:" class="footerLis" @click="discern">
-          <img v-if="isDiscern" src="../images/shiwu1.png" class="footerList"></img>
-          <img v-else-if="!isDiscern" src="../images/shiwu2.png" class="footerList"></img>
+           <img v-if="this.router=='discern'" src="../images/shiwu1.png" class="footerList"></img>
+          <img v-else src="../images/shiwu2.png" class="footerList"></img>
           <span class="home">识物</span>
         </i>
 
         <i href="javascript:" class="footerLis" @click="shopping">
-          <img v-if="isShopping" src="../images/shop1.png" class="footerList"></img>
-          <img v-else-if="!isShopping" src="../images/shop2.png" class="footerList"></img>
+          <img v-if="this.router=='shopping'" src="../images/shop1.png" class="footerList"></img>
+          <img v-else src="../images/shop2.png" class="footerList"></img>
           <span class="home">购物车</span>
         </i>
 
         <i href="javascript:" class="footerLis" @click="user">
-          <img v-if="isUser" src="../images/user1.png" class="footerList"></img>
-          <img v-else-if="!isUser" src="../images/user2.png" class="footerList"></img>
+          <img v-if="this.router=='user'" src="../images/user1.png" class="footerList"></img>
+          <img v-else src="../images/user2.png" class="footerList"></img>
           <span class="home">个人</span>
         </i>
     </Footer>
@@ -39,73 +39,56 @@
   export default {
     data () {
       return {
-        ishome: true,
-        isClassify:false,
-        isDiscern:false,
-        isShopping:false,
-        isUser:false
+        router:'home',
       }
     },
-
+    mounted(){
+      this.router=this.$route.path.split('/')[1]
+    },
+    watch:{
+      router(){
+        if (this.router==='user'){
+          this.$refs.qqq.style.display="none"
+        }else{
+          this.$refs.qqq.style.display="block"
+        }
+        this.router=this.$route.path.split('/')[1]
+    }
+    },
     methods:{
       home(){
-        if(!this.ishome){
-        this.ishome=true
-        this.isClassify=false
-        this.isDiscern=false
-        this.isShopping=false
-        this.isUser=false
-        }
+
         //跳转到首页
-        console.log(this.$route)
         this.$router.push('/home')
-        console.log(this.$route.path)
+        this.router=this.$route.path.split('/')[1]
+
       },
        classify(){
-        if(this.isClassify ===false){
-          this.isClassify=true
-          this.ishome=false
-          this.isDiscern=false
-          this.isShopping=false
-          this.isUser=false
-        }
+
         //跳转到分类
         this.$router.replace('/classify')
+        this.router=this.$route.path.split('/')[1]
         let a =this.$route.path
-         console.log(a.slice(1))  //截取字符串
       },
        discern(){
-         if(this.isDiscern===false){
-          this.isClassify=false
-          this.ishome=false
-          this.isDiscern=true
-          this.isShopping=false
-          this.isUser=false
-        }
+
         //跳转到识物
         this.$router.replace('/discern')
-      },
+        this.router=this.$route.path.split('/')[1]
+
+       },
        shopping(){
-          if(this.isShopping===false){
-          this.isClassify=false
-          this.ishome=false
-          this.isDiscern=false
-          this.isShopping=true
-          this.isUser=false
-        }
+
         //跳转到购物车
         this.$router.replace('/shopping')
-      },
+        this.router=this.$route.path.split('/')[1]
+
+       },
        user(){
-          if(this.isUser===false){
-          this.isClassify=false
-          this.ishome=false
-          this.isDiscern=false
-          this.isShopping=false
-          this.isUser=true
-        }
+
         //跳转到个人中心
         this.$router.replace('/user')
+        this.router=this.$route.path.split('/')[1]
       },
     }
   }

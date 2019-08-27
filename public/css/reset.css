@@ -4,7 +4,7 @@
  */
 html,
 body,
-div,
+/* div, */
 span,
 applet,
 object,
@@ -91,6 +91,7 @@ input {
   width:100%;
   font-weight: normal;
   vertical-align: baseline;
+  outline:none;
 }
 
 /* HTML5 display-role reset for older browsers */

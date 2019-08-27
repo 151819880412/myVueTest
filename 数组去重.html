@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    
+    function uniq(array){
+    var temp = [];
+    for(var i = 0; i < array.length; i++) {
+        //如果当前数组的第i项在当前数组中第一次出现的位置是i，才存入数组；否则代表是重复的
+        if(array.indexOf(array[i]) == i){
+            // i在array[i]中为true不在为false
+            // console.log('1111',array[i],i)
+            temp.push(array[i])
+        }
+    }
+    return temp;
+}
+
+var aa = [1,2,2,4,9,2,3,5,6,5];
+// console.log(aa.indexOf(2)==1)
+console.log(uniq(aa));
+
+
+
+// let uniqArr = arr => [...new Set(arr)]           不实现
+let aaa =[...new Set(aa)]
+
+console.log(aaa)
+    </script>
+</body>
+</html>

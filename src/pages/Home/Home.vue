@@ -44,11 +44,11 @@
 <!--      商品列表分类-->
       <div class="shopping">
           <div class="shoppings">
-            <div class="shopingList">
-              <img class="shopImgs" src="https://yanxuan.nosdn.127.net/5243a7191dd4c86b3b28859089273aa8.gif" alt="">
-              <span class="shopSpan" >新品首发</span>
+            <div class="shopingList" v-for="(item,index) in homeData">
+              <img class="shopImgs" :src="item.picUrl" alt="">
+              <span class="shopSpan" >{{item.text}}</span>
             </div>
-            <div class="shopingList">
+            <!-- <div class="shopingList">
               <img class="shopImgs"  src="https://yanxuan.nosdn.127.net/fede8b110c502ec5799702d5ec824792.png" alt="">
               <span  class="shopSpan" >居家生活</span>
             </div>
@@ -83,7 +83,7 @@
             <div class="shopingList">
               <img class="shopImgs"  src="https://yanxuan.nosdn.127.net/3954c3cbeb4359dd7007be7a076e0dda.gif" alt="">
               <span  class="shopSpan" >超级会员</span>
-            </div>
+            </div> -->
           </div>
       </div>
 
@@ -130,7 +130,6 @@
           </div>
       </div>
     </div>
-
 <!--    底部-->
     <footer class="footer">
       <Footer/>
@@ -145,9 +144,16 @@ import Header from '../../components/Hearder/Herder.vue'
 import Footer from '../../components/Footer/Footer'
 import Swiper from 'swiper'
 import "swiper/dist/css/swiper.css"
+import {reqHomeData} from '../../api'
+import { mapState, mapGetters } from 'vuex'
+
   export default {
 
-  mounted(){
+  async mounted(){
+    // 获取当前路由
+    // console.log(window.document.location.pathname)
+    //console.log(this.$route.path.split('/')[1])
+
     var mySwiper = new Swiper ('.swiper-container', {
       loop: true, // 循环模式选项
 
@@ -155,12 +161,16 @@ import "swiper/dist/css/swiper.css"
       pagination: {
         el: '.swiper-pagination',
       },
-
-
-
-
     })
+    this.$store.dispatch('getHomeData')
+    // let homeData = await reqHomeData()
+    // console.log(this.$store.state.homeData)
   },
+  computed:{
+     ...mapState({
+      homeData: state => state.homeData
+    })
+  }, 
     components:{
       Header,
       Footer
@@ -206,7 +216,7 @@ import "swiper/dist/css/swiper.css"
           height 32px
   .zhuti
     background #cccccc
-    height 8530px
+    height 100%
     width 100%
     .shopping
       width 100%
@@ -405,6 +415,6 @@ import "swiper/dist/css/swiper.css"
                     margin-top -7px
                     text-decoration: line-through;
   .footer
-    height 999999px
+    height 100px
 
 </style>

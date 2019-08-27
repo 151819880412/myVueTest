@@ -20,22 +20,35 @@
 
 <script type="text/ecmascript-6">
   export default {
-    // 自定义事件
-    //     data(){
-    //   return{
-    //     isDenglu:0
+    // // 自定义事件
+    // //     data(){
+    // //   return{
+    // //     isDenglu:0
+    // //   }
+    // // },
+    // methods:{
+    //   toShoujiDenglu(){
+    //     // this.isDenglu= 1
+    //     // this.$emit('qq')
+    //     console.log(111)
+    //   },
+    //   toYouxiangDenglu(){
+    //     // this.isDenglu= 2
+    //     console.log(222)
     //   }
     // },
+
+
+//vuex自定义事件
+
     methods:{
+      /*登陆方式和返回首页*/
       toShoujiDenglu(){
-        // this.isDenglu= 1
-        // this.$emit('qq')
-        console.log(111)
         this.$store.dispatch('shoujidenglu')
       },
       toYouxiangDenglu(){
-        // this.isDenglu= 2
         console.log(222)
+        this.$store.dispatch('youxiangdenglu')
       }
     },
 
@@ -43,12 +56,12 @@
 
 
 
-    
   }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-
+  .qiehuanDenglu
+    height 1247px
     .LoginMid
       display block
       width 750px

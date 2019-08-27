@@ -3,16 +3,16 @@
     <div class="sousuoHeader">
       <div class="sousuoDiv">
         <input type="text" class="sousuoInp"
-               :placeholder="defaultKeyword"
+               :placeholder="this.keyWords? this.keyWords:''"
 
-               v-model="keyword11">
+               v-model="keyword">
 
-        <div v-if="keyword11!=''" v-for="(item,index) in keywords">{{item}}</div>
+        <div v-for="(item,index) in result">{{item}}</div>
       </div>
       <div class="sousuoQuxiao" @click="toHome">取消</div>
     </div>
     <div class="sousuoLIsts">
-      <div class="sousuoList" v-for="(item,index) in hotKeywordVOList"
+      <div class="sousuoList" v-for="(item,index) in sousuoList"
            :style="{width:item.keyword.length*35+'px'}">
         {{item.keyword}}</div>
 
@@ -22,26 +22,15 @@
 
 <script type="text/ecmascript-6">
   import {reqKeyWord,reqSousuoLIst} from '../../../api'
-import { mapState, mapGetters } from 'vuex'
-import {KER_WORD} from '../../../store/mutations-type'
+
   export default {
     data(){
       return{
-        keyword11:'',
-        // result:'',
-        // keyWords:'',
-        // sousuoList:''
+        keyword:'',
+        result:'',
+        keyWords:'',
+        sousuoList:''
       }
-    },
-     computed:{
-     ...mapState({
-        keywords:state => state.keywords,
-        // keyword: state => state.keyword,
-        hotKeywordVOList: state => state.keyworldList.hotKeywordVOList,
-        defaultKeyword:state => state.keyworldList.defaultKeyword.keyword,
-        defaultKeywords:state => state.keyworldList.defaultKeywords,
-      }),
-
     },
     methods:{
       toHome(){
@@ -49,15 +38,14 @@ import {KER_WORD} from '../../../store/mutations-type'
         this.$router.replace('/home')
       },
     },
-     mounted(){
-      // console.log(sousuoLIst)
-      // this.keyWords=sousuoLIst.data.defaultKeyword.keyword
-      // this.sousuoList = sousuoLIst.data.hotKeywordVOList
-      // console.log(sousuoLIst.data.hotKeywordVOList)
-      // // console.log(this.sousuoLIst)
-       this.$store.dispatch('getAddress1')
-      // var bbb= this.$store.state.keyworld2.hotKeywordVOList
-      // console.log(bbb)
+    async beforeCreate(){
+      const sousuoLIst = await reqSousuoLIst()
+      console.log(sousuoLIst)
+      this.keyWords=sousuoLIst.data.defaultKeyword.keyword
+      this.sousuoList = sousuoLIst.data.hotKeywordVOList
+      console.log(sousuoLIst.data.hotKeywordVOList)
+      // console.log(this.sousuoLIst)
+      
     },
     watch:{
       // async keyword(value){
@@ -66,19 +54,15 @@ import {KER_WORD} from '../../../store/mutations-type'
       //   this.result=res.data
       // }
 
-
-
-
-      async keyword11(value){
-        // if(){
-
-        // }
-        await this.$store.dispatch('getAddress',value)
-        // this.$store.commit(KER_WORD,value)
-     
+      //  keyword(value){
+      //    this.$store.dispatch('getAddress',value)
+      //   let aaa= this.$store.state.keyworld1
+      //   // console.log(111)
+      //   console.log(aaa)
+        // console.log(this.$store.state)
       }
     }
-  }
+  
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" >
@@ -113,7 +97,7 @@ import {KER_WORD} from '../../../store/mutations-type'
     .sousuoLIsts
       width 720px
       height 326px
-      margin-top 400px
+      margin 20px
       .sousuoList
         display inline-block
         width 200px

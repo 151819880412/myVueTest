@@ -92,9 +92,9 @@
         let btn1 = document.getElementById('jiantou')
         let current = this.current
         current = (current+180)%360;
-        btn1.style.transform = 'rotate('+current+'deg)'
+        btn1.style.transform = 'rotate('+current+'deg)';
         this.current = current
-        // console.log(this.current)
+        console.log(this.current)
 
 // reqKeyWord()
         //  const ss= await reqKeyWord('a')

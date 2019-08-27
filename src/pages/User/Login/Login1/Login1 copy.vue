@@ -9,29 +9,20 @@
       <div class="Login1ContainerWarpWarp">
         <form >
           <div class="LoginDenglufangshiDiv">
-            <input type="tel" maxlength="11" placeholder="手机号" 
-                name="phone" v-model="phone" v-validate="'required|mobile'" class="LoginDenglufangshi">
-            <span style="color:red; font-size:30px" v-show="errors.has('phone')">{{ errors.first('phone') }}</span>
+            <input class="LoginDenglufangshi" placeholder="请输入手机号" v-model="shoujihao"
+              type="tel" maxlength="11" name="phone" v-validate="required|mobile"
+            >
+            <span>{{shoujihao}}</span>
           </div>
           <div class="LoginDengluMimaDiv">
-            <input class="LoginDengluMima"  placeholder="请输入验证码"
-            name="code" v-model="code" v-validate="'required'"
-            >
-            <span style="color:red; font-size:30px">{{ errors.first('code') }}</span>
-            <!-- <a href="javascript:" class="LoginDengluMimaBtn" @click="yanzhengma">获取验证码</a> -->
-
-              <button :disabled="!isRightPhone || computeTime>0"class="LoginDengluMimaBtn"
-                :class="{right_phone_number: isRightPhone}" @click.prevent="yanzhengma">
-                {{computeTime>0 ? `已发送验证码(${computeTime}s)` : '获取验证码'}}
-              </button>
-
+            <input class="LoginDengluMima"  placeholder="请输入验证码">
+            <a href="javascript:" class="LoginDengluMimaBtn">获取验证码</a>
           </div>
           <div class="LoginDengluWentiDiv">
-            <input class="LoginDengluWenti"  placeholder="遇到问题" 
-            >
-            <a style="color:black" href="javascript:" class="LoginDengluWentiBtn">使用密码验证登陆</a>
+            <input class="LoginDengluWenti"  placeholder="请输入短信验证码">
+            <a href="javascript:" class="LoginDengluWentiBtn">使用验证码登陆</a>
           </div>
-          <button class="LoginDengluBtn" @click.prevent="login">
+          <button class="LoginDengluBtn">
             登陆
           </button>
         </form>
@@ -50,72 +41,16 @@
 </template>
 
 <script type="text/ecmascript-6">
-import {reqSendCode,reqSmsLogin} from '../../../../api'
-import ajax from '../../../../api/ajax';
   export default {
     data() {
       return {
-        phone:'',
-        code:'',
-        code1:'',
-        computeTime: 0, // 计时剩余的时间, 为0时没有计时了
-      }
-    },
-        computed: {
-      /* 
-      是否是正确手机号
-      */
-      isRightPhone () {
-        return /^1\d{10}$/.test(this.phone)
+        shoujihao:''
       }
     },
     methods:{
       backLogin(){
         this.$store.dispatch('fanhuishouye')
-      },
-      async yanzhengma(){
-        // alert('----')
-        // 设置最大时间
-        this.computeTime = 10
-        // 启动循环定时器进行计时
-        const intervalId = setInterval(() => {
-          this.computeTime--
-          // 一旦到了0, 清除定时器
-          if (this.computeTime===0) {
-            clearInterval(intervalId)
-          }
-        }, 1000)
-
-
-      //  console.log( typeof this.phone)
-        // 发送ajax请求: 发送短信验证码
-        const result = await reqSendCode(this.phone)
-        // console.log(result)
-        if (result.code===0) {
-          alert('短信已成功发送')
-        } else {
-          alert(result)
-        }
-
-      },
-      async login(){
-        var  names
-        names = ['phone','code']
-        const success =  this.$validator.validateAll(names)
-        // this.$validator.localize('zh_CN', validateDict)
-        const result = await reqSmsLogin(this.phone,this.code)
-         if (result.code===0) {
-          // 将user信息保存到state中
-          const user = result.data
-          // console.log(result.data)
-          this.$store.dispatch('userToken', user)
-          // 跳转到个人中心
-          this.$router.replace('/home')
-        } else { // 登陆失败
-          alert(result.msg)
-        }
-        // console.log(this.phone,this.code,result)
-       }
+      }
     },
 
   }
@@ -185,11 +120,10 @@ import ajax from '../../../../api/ajax';
           height 92px
           border-bottom 1px solid #333
         .LoginDengluWentiBtn
-          width 270px
           height 54px
           position absolute
           top: 20px
-          right: 0
+          right: -200px
           font-size 30px
           text-align center
           line-height 54px
